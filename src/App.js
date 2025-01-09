@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.css';
 
 const App = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -8,6 +7,7 @@ const App = () => {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
   const [gameStarted, setGameStarted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleStartGame = (name1, name2) => {
     setPlayer1(name1);
@@ -56,13 +56,30 @@ const App = () => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
     setWinner(null);
-    setGameStarted(false);  // Go back to player name entry screen
+    setGameStarted(false); // Go back to player name entry screen
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  
+    if (!isDarkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    } else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
+  };
+  
+
   return (
-    <div className="game">
+    <div className={`game`}>
       <h1>Tic Tac Toe</h1>
       
+      <button className="dark-mode-toggle" onClick={toggleDarkMode}>
+        {isDarkMode ? '🌙' : '☀️'}
+      </button>
+
       {!gameStarted ? (
         <div className="start-game">
           <h2>Enter Player Names</h2>
